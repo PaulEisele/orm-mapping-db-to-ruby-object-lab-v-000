@@ -2,14 +2,11 @@ class Student
   attr_accessor :id, :name, :grade
 
   def self.new_from_db(row)
-    sql =<<-SQL
-    SELECT *
-    FROM students
-    WHERE row = ?
-    LIMIT 1;
-    SQL
-    row = DB[:conn].execute(sql, row)[0]
-    self.new_from_db(row)
+    new_student = self.new  # self.new is same as Student.new
+    new_student.id = row[0]
+    new_student.name =  row[1]
+    new_student.grade = row[2]
+    new_student 
   end
 
   def self.all
