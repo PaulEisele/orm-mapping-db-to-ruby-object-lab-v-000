@@ -52,4 +52,37 @@ class Student
     sql = "DROP TABLE IF EXISTS students"
     DB[:conn].execute(sql)
   end
+
+  
+  def self.count_all_students_in_grade_9
+    sql = "SELECT * from students where grade = 9"
+    DB[:conn].execute(sql).map do |row|
+      self.new_from_db(row)
+    end    
+  end
+   def self.students_below_12th_grade
+    sql = "SELECT * from students where grade < 12"
+    DB[:conn].execute(sql).map do |row|
+      self.new_from_db(row)
+    end    
+  end
+  
+  def self.first_X_students_in_grade_10(x)
+    sql = "SELECT * from students where grade = 10 LIMIT ?"
+    DB[:conn].execute(sql, x).map do |row|
+      self.new_from_db(row)
+    end    
+  end
+   def self.first_student_in_grade_10
+    sql = "SELECT * from students where grade = 10 ORDER by id"
+    DB[:conn].execute(sql).map do |row|
+      self.new_from_db(row)
+    end.first
+  end
+   def self.all_students_in_grade_X(x)
+    sql = "SELECT * from students where grade = ?"
+    DB[:conn].execute(sql, x).map do |row|
+      self.new_from_db(row)
+    end    
+  end	 
 end
